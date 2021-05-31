@@ -64,8 +64,8 @@ if __name__ == 'Core':
         pass 
     else: 
         ssl._create_default_https_context = _create_unverified_https_context
-    if os.path.isfile(includefolder+'version'):
-        with open(includefolder+'version', 'rb') as fp:
+    if os.path.isfile('inc/version'):
+        with open('inc/version', 'rb') as fp:
             version = pickle.load(fp)
             fp.close()
     if internet_on:
