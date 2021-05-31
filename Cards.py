@@ -43,57 +43,12 @@ from rich.progress import (
     TimeRemainingColumn,
     TransferSpeedColumn,
 )
-updateurl = "https://raw.githubusercontent.com/Girthquake/CardBuilder/master/main.py"
-versionurl = "https://raw.githubusercontent.com/Girthquake/CardBuilder/master/Updater/version"
-version=0
-updateversion=0
-style="old"
 if __name__ == '__main__':
-    try:
-        _create_unverified_https_context = ssl._create_unverified_context 
-    except AttributeError: 
-        pass 
-    else: 
-        ssl._create_default_https_context = _create_unverified_https_context
-    if os.path.isfile('version'):
-        with open('version', 'rb') as fp:
-            version = pickle.load(fp)
-            fp.close()
-    version_check = requests.get(versionurl, verify=False)
-    #print(version)
-    with open('vers', 'wb') as f:
-        f.write(version_check.content)
-        f.close
-    with open('vers', 'r') as f:
-        new_version=f.readlines()
-        updateurl=new_version[1].strip('\n')
-        updatedversion=new_version[0].strip('\n')
-        f.close()
-        #os.remove('vers')
-    #print(new_version)
-    if Decimal(updatedversion) <= Decimal(version):
-        if os.path.isfile('main.py'):
-            #print('Importing local main')
-            import importlib
-            import importlib.util
-            spec = importlib.util.spec_from_file_location('main', 'main.py')
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-        else:
-            print('Importing system main')
-            import main
+    if os.path.isfile('Core.py'):
+        import importlib
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('Core', 'Core.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
     else:
-        ur.urlretrieve(updateurl, "main.py")
-        version = updatedversion
-        with open('version', 'wb') as fp:
-            pickle.dump(version, fp)
-        if os.path.isfile('main.py'):
-            #print('Importing local main')
-            import importlib
-            import importlib.util
-            spec = importlib.util.spec_from_file_location('main', 'main.py')
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-        else:
-            print('Importing system main')
-            import main
+        import Core
