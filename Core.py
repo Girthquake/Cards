@@ -21,7 +21,7 @@ import time
 import shutil
 import pickle
 import binascii
-import urllib2
+import urllib
 import requests
 from decimal import *
 import os, sys
@@ -44,7 +44,7 @@ from rich.progress import (
     TimeRemainingColumn,
     TransferSpeedColumn,
 )
-versionurl = "https://raw.githubusercontent.com/Girthquake/CardBuilder/master/Updater/version"
+versionurl = "https://raw.githubusercontent.com/Girthquake/Cards/master/inc/version"
 version=0
 updateurl = 0
 updateversion=0
@@ -52,9 +52,9 @@ includefolder='inc/'
 
 def internet_on():
     try:
-        urllib2.urlopen('https://www.google.com/', timeout=2)
+        urllib.urlopen('https://www.google.com/', timeout=2)
         return True
-    except urllib2.URLError as err: 
+    except urllib.URLError as err: 
         return False
 
 if __name__ == 'Core':
@@ -81,16 +81,25 @@ if __name__ == 'Core':
             injesturl=new_version[4]
             f.close() #now that we have the variables saved lets do the work.
         if Decimal(updatedversion) <= Decimal(version):
-            if os.path.isfile('Main.py'):
-                #print('Importing local main')
-                import importlib
-                import importlib.util
-                spec = importlib.util.spec_from_file_location('MMain', 'Main.py')
-                module = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(module)
+            if Confirm.ask("Are there Images you would like to process?"):
+                if os.path.isfile('ImageInjest.py'):
+                    import importlib
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location('ImageInjest', 'ImageInjest.py')
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+                else:
+                    import ImageInjest
             else:
-                print('Importing system main')
-                import Main
+                if os.path.isfile('Main.py'):
+                    import importlib
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location('Main', 'Main.py')
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+                else:
+                    print('Importing system main')
+                    import Main
         else:
             ur.urlretrieve(updateurl, "Main.py")
             ur.urlretrieve(updatecoreurl, "Core.py")
@@ -98,6 +107,37 @@ if __name__ == 'Core':
             version = updatedversion
             with open(includefolder+'version', 'wb') as fp:
                 pickle.dump(version, fp)
+            if Confirm.ask("Are there Images you would like to process?"):
+                if os.path.isfile('ImageInjest.py'):
+                    import importlib
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location('ImageInjest', 'ImageInjest.py')
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+                else:
+                    import ImageInjest
+            else:
+                if os.path.isfile('Main.py'):
+                    import importlib
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location('Main', 'Main.py')
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+                else:
+                    print('Importing system main')
+                    import Main
+    else:
+        print("no internet for updating..... \ntisk tisk...")
+        if Confirm.ask("Are there Images you would like to process?"):
+            if os.path.isfile('ImageInjest.py'):
+                import importlib
+                import importlib.util
+                spec = importlib.util.spec_from_file_location('ImageInjest', 'ImageInjest.py')
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+            else:
+                import ImageInjest
+        else:
             if os.path.isfile('Main.py'):
                 import importlib
                 import importlib.util
@@ -105,16 +145,5 @@ if __name__ == 'Core':
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
             else:
-                print('Importing system main')
-                import Main
-    else:
-        print("no internet for updating..... \ntisk tisk...")
-        if os.path.isfile('main.py'):
-                import importlib
-                import importlib.util
-                spec = importlib.util.spec_from_file_location('Main', 'Main.py')
-                module = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(module)
-        else:
                 print('Importing system main')
                 import Main

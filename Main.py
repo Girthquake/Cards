@@ -20,7 +20,7 @@ import requests
 import random
 import time
 import shutil
-import urllib2
+import urllib
 import os, sys
 import pickle
 import binascii

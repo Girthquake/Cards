@@ -17,7 +17,7 @@ from tkinter import *
 import tkinter as tk
 import PIL
 import openpyxl
-import urllib2
+import urllib
 import glob
 import random
 import time
