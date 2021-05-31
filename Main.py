@@ -20,6 +20,7 @@ import requests
 import random
 import time
 import shutil
+import urllib2
 import os, sys
 import pickle
 import binascii
@@ -370,29 +371,11 @@ def generate_resources():
             for item in resourcedefault:
                 f.write("%s\n" % item)
 #Main Program
-if __name__ == 'main':
-    # YOU NEED TO MAKE A WAY TO UPDATE THE MAIN LOADER!
+if __name__ == 'Main':
     with open('vers', 'r') as f:
         new_version=f.readlines()
         f.close()
         os.remove('vers')
-    #print(new_version)
-    if new_version[3].strip('\n') == 'Update_Image_Injector_True':
-        updateimageinjest = True
-    if new_version[4].strip('\n') == 'Update_Loader_True':
-        updateloader = True
-    if updateloader:
-        print("updating Loader Please wait")
-        ulu = requests.get('https://github.com/Girthquake/CardBuilder/raw/master/comp/CardBuilder.exe', verify=False)
-        with open('CardBuilderNew.exe', 'wb') as f:
-            f.write(ulu.content)
-            f.close
-    if updateimageinjest:
-        print("updating Image Injester Please wait")
-        uiiu = requests.get("https://github.com/Girthquake/CardBuilder/raw/master/comp/ImageInjest.exe", verify=False)
-        with open('ImageInjest.exe', 'wb') as f:
-            f.write(uiiu.content)
-            f.close
     isgood = False
     console = Console()
     try:

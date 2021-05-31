@@ -2,8 +2,7 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.chart import PieChart, Reference, Series
-from PIL import Image, ImageDraw, ImageFont
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont, ImageTk
 from datetime import date
 from rich.console import Console
 from rich.text import Text
@@ -14,7 +13,11 @@ from rich.table import Table
 from rich.progress import track
 from rich.prompt import Confirm
 from rich.theme import Theme
+from tkinter import *
+import tkinter as tk
+import PIL
 import openpyxl
+import urllib2
 import glob
 import random
 import time
