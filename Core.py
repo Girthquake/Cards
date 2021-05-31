@@ -64,8 +64,8 @@ if __name__ == 'Core':
         pass 
     else: 
         ssl._create_default_https_context = _create_unverified_https_context
-    if os.path.isfile('inc/version'):
-        with open('inc/version', 'rb') as fp:
+    if os.path.isfile('inc/versionbak'):
+        with open('inc/versionbak', 'rb') as fp:
             version = pickle.load(fp)
             fp.close()
     if internet_on:
@@ -105,7 +105,7 @@ if __name__ == 'Core':
             ur.urlretrieve(updatecoreurl, "Core.py")
             ur.urlretrieve(injesturl,"ImageInjest.py")
             version = updatedversion
-            with open(includefolder+'version', 'wb') as fp:
+            with open(includefolder+'versionbak', 'wb') as fp:
                 pickle.dump(version, fp)
             if Confirm.ask("Are there Images you would like to process?"):
                 if os.path.isfile('ImageInjest.py'):
